@@ -2,7 +2,7 @@ module github.com/cmmarslender/xch-report
 
 go 1.17
 
-require github.com/cmmarslender/go-chia-rpc v0.0.0-20211111143150-f11bced7b4a2
+require github.com/cmmarslender/go-chia-rpc v0.0.0-20220115191442-2c367c365ad4
 
 require (
 	github.com/google/go-querystring v1.1.0 // indirect

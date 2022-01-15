@@ -1,5 +1,5 @@
-github.com/cmmarslender/go-chia-rpc v0.0.0-20211111143150-f11bced7b4a2 h1:BP7qQ9unhZb9wjMIdFSkbfjIE/a8AtIrEQEnUBd9Egg=
-github.com/cmmarslender/go-chia-rpc v0.0.0-20211111143150-f11bced7b4a2/go.mod h1:kN7kwLes9iibk9BKhQMZ2O6rSTcJmgmrT+mKjNFwPBY=
+github.com/cmmarslender/go-chia-rpc v0.0.0-20220115191442-2c367c365ad4 h1:+Zf3qrhKhfRx9IMc4Jsb87shv1134FR1xgL6yxCuk1I=
+github.com/cmmarslender/go-chia-rpc v0.0.0-20220115191442-2c367c365ad4/go.mod h1:kN7kwLes9iibk9BKhQMZ2O6rSTcJmgmrT+mKjNFwPBY=
 github.com/google/go-cmp v0.5.2 h1:X2ev0eStA3AbceY54o37/0PQ/UWqKEiiO2dKL5OPaFM=
 github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD/fhyJ8=
