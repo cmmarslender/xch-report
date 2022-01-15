@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/cmmarslender/go-chia-rpc/pkg/rpc"
+	"github.com/cmmarslender/go-chia-rpc/pkg/util"
 )
 
 func main() {
@@ -16,9 +17,21 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 
+	transactionCount, _, err := client.WalletService.GetTransactionCount(
+		&rpc.GetWalletTransactionCountOptions{
+			WalletID: 1,
+		},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Exporting %d total transactions...\n", transactionCount.Count)
+
 	transactions, _, err := client.WalletService.GetTransactions(
 		&rpc.GetWalletTransactionsOptions{
 			WalletID: 1,
+			End: util.IntPtr(transactionCount.Count),
 		},
 	)
 
