@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Printf("Exporting %d total transactions...\n", transactionCount.Count)
+	log.Printf("Exporting %d total transactions...\n", transactionCount.Count.OrEmpty())
 
 	transactions, _, err := client.WalletService.GetTransactions(
 		&rpc.GetWalletTransactionsOptions{
@@ -46,7 +46,10 @@ func main() {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	writer.Write([]string{"name", "height", "date", "type", "amount"})
+	err = writer.Write([]string{"name", "height", "date", "type", "amount"})
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
 
 	for _, transaction := range transactions.Transactions.OrEmpty() {
 		createdTime := transaction.CreatedAtTime
@@ -56,7 +59,10 @@ func main() {
 		} else {
 			inOrOut = "outbound"
 		}
-		writer.Write([]string{transaction.Name.String(), fmt.Sprintf("%d", transaction.ConfirmedAtHeight), createdTime.String(), inOrOut, fmt.Sprintf("%.12f", float64(transaction.Amount)/1000000000000)})
+		err = writer.Write([]string{transaction.Name.String(), fmt.Sprintf("%d", transaction.ConfirmedAtHeight), createdTime.String(), inOrOut, fmt.Sprintf("%.12f", float64(transaction.Amount)/1000000000000)})
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
 	}
 
 	log.Println("Done")
