@@ -65,6 +65,9 @@ var rootCmd = &cobra.Command{
 			}
 
 			for _, transaction := range transactions.Transactions.OrEmpty() {
+				if transaction.Amount <= viper.GetUint64("dust-amount") {
+					continue
+				}
 				createdTime := transaction.CreatedAtTime
 				var inOrOut string
 				if len(transaction.Removals) == 0 {
@@ -107,15 +110,20 @@ func Execute() {
 
 func init() {
 	var (
-		perPage int
+		perPage    int
+		dustAmount uint64
 	)
 
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.xch-report.yaml)")
 	rootCmd.PersistentFlags().IntVar(&perPage, "per-page", 1000, "Number of results to process per RPC call")
+	rootCmd.PersistentFlags().Uint64Var(&dustAmount, "dust-amount", 0, "Amount in mojos to be considered dust, and excluded from the CSV")
 
 	err := viper.BindPFlag("per-page", rootCmd.PersistentFlags().Lookup("per-page"))
+	cobra.CheckErr(err)
+
+	err = viper.BindPFlag("dust-amount", rootCmd.PersistentFlags().Lookup("dust-amount"))
 	cobra.CheckErr(err)
 }
 
