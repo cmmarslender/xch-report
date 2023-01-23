@@ -16,10 +16,6 @@ import (
 
 var cfgFile string
 
-const (
-	perPage int = 1000
-)
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "xch-report",
@@ -59,7 +55,7 @@ var rootCmd = &cobra.Command{
 		txOpts := &rpc.GetWalletTransactionsOptions{
 			WalletID: 1,
 			Start:    ptr.IntPtr(0),
-			End:      ptr.IntPtr(perPage),
+			End:      ptr.IntPtr(viper.GetInt("per-page")),
 		}
 
 		for {
@@ -81,11 +77,11 @@ var rootCmd = &cobra.Command{
 					log.Fatalln(err.Error())
 				}
 			}
-			err = bar.Add(perPage)
+			err = bar.Add(viper.GetInt("per-page"))
 			cobra.CheckErr(err)
 
-			txOpts.Start = ptr.IntPtr(*txOpts.Start + perPage)
-			txOpts.End = ptr.IntPtr(*txOpts.End + perPage)
+			txOpts.Start = ptr.IntPtr(*txOpts.Start + viper.GetInt("per-page"))
+			txOpts.End = ptr.IntPtr(*txOpts.End + viper.GetInt("per-page"))
 
 			if *txOpts.End >= totalTx {
 				break
@@ -110,9 +106,17 @@ func Execute() {
 }
 
 func init() {
+	var (
+		perPage int
+	)
+
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.xch-report.yaml)")
+	rootCmd.PersistentFlags().IntVar(&perPage, "per-page", 1000, "Number of results to process per RPC call")
+
+	err := viper.BindPFlag("per-page", rootCmd.PersistentFlags().Lookup("per-page"))
+	cobra.CheckErr(err)
 }
 
 // initConfig reads in config file and ENV variables if set.
