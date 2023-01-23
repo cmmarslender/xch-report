@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/chia-network/go-chia-libs/pkg/ptr"
 	"github.com/chia-network/go-chia-libs/pkg/rpc"
@@ -81,7 +80,7 @@ var rootCmd = &cobra.Command{
 				}
 			}
 			err = bar.Add(viper.GetInt("per-page"))
-			cobra.CheckErr(err)
+			_ = err
 
 			txOpts.Start = ptr.IntPtr(*txOpts.Start + viper.GetInt("per-page"))
 			txOpts.End = ptr.IntPtr(*txOpts.End + viper.GetInt("per-page"))
@@ -89,7 +88,6 @@ var rootCmd = &cobra.Command{
 			if *txOpts.End >= totalTx {
 				break
 			}
-			time.Sleep(100 * time.Millisecond)
 		}
 
 		err = bar.Finish()
