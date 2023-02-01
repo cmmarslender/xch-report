@@ -3,7 +3,7 @@ module github.com/cmmarslender/xch-report
 go 1.18
 
 require (
-	github.com/chia-network/go-chia-libs v0.2.1
+	github.com/chia-network/go-chia-libs v0.2.2
 	github.com/schollz/progressbar/v3 v3.13.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
