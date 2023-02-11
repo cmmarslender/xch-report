@@ -82,12 +82,12 @@ var rootCmd = &cobra.Command{
 			err = bar.Add(viper.GetInt("per-page"))
 			_ = err
 
-			txOpts.Start = ptr.IntPtr(*txOpts.Start + viper.GetInt("per-page"))
-			txOpts.End = ptr.IntPtr(*txOpts.End + viper.GetInt("per-page"))
-
 			if *txOpts.End >= totalTx {
 				break
 			}
+
+			txOpts.Start = ptr.IntPtr(*txOpts.Start + viper.GetInt("per-page"))
+			txOpts.End = ptr.IntPtr(*txOpts.End + viper.GetInt("per-page"))
 		}
 
 		err = bar.Finish()
